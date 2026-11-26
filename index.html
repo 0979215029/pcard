@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<script>if(/Line\/|LIFF/i.test(navigator.userAgent))document.documentElement.classList.add("lineInApp");</script>
 <title>紐崔萊營養保健食品介紹</title>
 <style>
 *{box-sizing:border-box}
@@ -25,6 +26,20 @@ h1{margin:7px 0 10px;text-align:center;color:#287944;font-size:16px}
 #portalProducts>.note{margin:6px 0 10px;padding:6px 8px;font-size:11px;line-height:1.25}
 @media(max-width:520px){.productListTitle{font-size:13px}.productTextList{grid-template-columns:1fr}.productTextList li{font-size:11px;padding:4px 5px}.foundationNote{font-size:11px;padding:4px 5px}#portalProducts>.note{font-size:10px;padding:4px 5px}}
 @media(max-width:520px){main{padding:10px 14px 20px}}
+</style>
+
+<style id="webTextScale">
+/* Chrome 等一般瀏覽器字級放大，LINE 版保留原本大小 */
+html:not(.lineInApp) .dealer{font-size:clamp(14px,4.1vw,17px)}
+html:not(.lineInApp) .contactBtn{font-size:16px;padding:6px 10px}
+html:not(.lineInApp) .shortUrlDisplay{font-size:14px}
+html:not(.lineInApp) h1{font-size:22px}
+html:not(.lineInApp) .productListTitle{font-size:20px}
+html:not(.lineInApp) .productTextList li{font-size:16px;line-height:1.4}
+html:not(.lineInApp) .foundationNote{font-size:18px;line-height:1.45}
+html:not(.lineInApp) .note{font-size:16px;line-height:1.45}
+html:not(.lineInApp) .order-bar{font-size:19px;padding:8px 10px}
+html:not(.lineInApp) .order-note{font-size:16px;line-height:1.4}
 </style>
 </head>
 <body>
