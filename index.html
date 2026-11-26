@@ -8,28 +8,30 @@
 *{box-sizing:border-box}
 body{margin:0;background:#f3f6f3;color:#24332b;font-family:Arial,'Noto Sans TC',sans-serif}
 .dealerTop{background:#fff;padding:8px 12px 4px;border-bottom:1px solid #cbd8c8}
-.dealer{font-size:13px;font-weight:bold;line-height:1.5;margin-bottom:7px;overflow-wrap:anywhere}
+.dealer{display:flex;align-items:center;justify-content:space-between;gap:6px;white-space:nowrap;font-size:12px;font-weight:bold;line-height:1.35}.dealerNameField{min-width:0;overflow:hidden;text-overflow:ellipsis}.dealerPhoneField{flex:0 0 auto}.contactBtn{margin-top:5px;padding:4px 9px;border:0;border-radius:6px;background:#287944;color:#fff;font-size:12px}.shortUrlDisplay{margin:5px 0 0;font-size:11px;line-height:1.3;overflow-wrap:anywhere}.shortUrlDisplay a{color:#176b3c}
 .bottomBar{position:fixed;left:0;right:0;bottom:0;z-index:100;background:#fff;padding:8px 12px calc(6px + env(safe-area-inset-bottom));border-top:1px solid #cbd8c8;box-shadow:0 -2px 7px #0002}
-.order-bar{display:block;text-align:center;background:#287944;color:#fff;text-decoration:none;padding:6px 10px;border-radius:8px;font-size:14px;font-weight:bold}
-.order-note{margin:4px 0 0;font-size:12px;line-height:1.35}
-.note{background:#fff6dc;padding:8px;border-radius:7px;font-size:14px;line-height:1.4}
+.order-bar{display:block;text-align:center;background:#287944;color:#fff;text-decoration:none;padding:6px 10px;border-radius:8px;font-size:12px;font-weight:bold;white-space:nowrap}
+.order-note{margin:4px 0 0;font-size:11px;line-height:1.3}
+.note{background:#fff6dc;padding:7px;border-radius:7px;font-size:12px;line-height:1.3}
 main{max-width:1050px;margin:auto;padding:12px 18px 24px}
-h1{margin:8px 0 12px;text-align:center;color:#287944;font-size:19px}
+h1{margin:7px 0 10px;text-align:center;color:#287944;font-size:16px}
 .productHumanCrop{max-width:none;width:calc(100% + 36px);aspect-ratio:1024/864;overflow:hidden;margin:4px -18px 8px;border:0;border-radius:0;background:transparent}
 .productHumanCrop img{display:block;width:100%;height:100%;object-fit:fill}
-.productListTitle{margin:8px 0 6px;padding:10px;text-align:center;background:#176326;color:#fff;border-radius:10px;font-size:18px}
+.productListTitle{margin:8px 0 6px;padding:10px;text-align:center;background:#176326;color:#fff;border-radius:10px;font-size:14px}
 .productTextList{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px 8px}
-.productTextList li{display:flex;gap:8px;align-items:flex-start;padding:8px 10px;border:1px solid #c9d6c8;border-radius:8px;background:#f8fbf5;font-size:15px;line-height:1.35}
+.productTextList li{display:flex;gap:8px;align-items:flex-start;padding:8px 10px;border:1px solid #c9d6c8;border-radius:8px;background:#f8fbf5;font-size:12px;line-height:1.3}
 .productTextList li strong{flex:none;color:#245f31}
-.foundationNote{margin:8px 0;padding:10px 12px;border:2px solid #78a756;border-radius:10px;background:#fff7d8;color:#173f22;font-size:16px;line-height:1.4;text-align:center}
-#portalProducts>.note{margin:6px 0 10px;padding:8px 10px;font-size:14px;line-height:1.35}
-@media(max-width:520px){.productListTitle{font-size:17px}.productTextList{grid-template-columns:1fr}.productTextList li{font-size:14px;padding:5px 7px}.foundationNote{font-size:14px;padding:6px 7px}#portalProducts>.note{font-size:13px;padding:5px 7px}}
+.foundationNote{margin:8px 0;padding:10px 12px;border:2px solid #78a756;border-radius:10px;background:#fff7d8;color:#173f22;font-size:13px;line-height:1.3;text-align:center}
+#portalProducts>.note{margin:6px 0 10px;padding:6px 8px;font-size:11px;line-height:1.25}
+@media(max-width:520px){.productListTitle{font-size:13px}.productTextList{grid-template-columns:1fr}.productTextList li{font-size:11px;padding:4px 5px}.foundationNote{font-size:11px;padding:4px 5px}#portalProducts>.note{font-size:10px;padding:4px 5px}}
 @media(max-width:520px){main{padding:10px 14px 20px}}
 </style>
 </head>
 <body>
 <header class="dealerTop">
-  <div class="dealer">經銷商：<span id="dealerName">未提供</span>　電話：<span id="dealerPhone">未提供</span></div>
+  <div class="dealer"><span class="dealerNameField">經銷商：<strong id="dealerName">未提供</strong></span><span class="dealerPhoneField">電話：<strong id="dealerPhone">未提供</strong></span></div>
+  <button type="button" id="addContact" class="contactBtn">加入電話簿</button>
+  <p id="shortUrlDisplay" class="shortUrlDisplay" hidden>購物網址：<a id="shortUrlLink" href="#" target="_blank" rel="noopener noreferrer"></a></p>
 </header>
 <main>
 <h1>紐崔萊營養保健食品介紹</h1>
@@ -54,6 +56,65 @@ if (personalCode) {
   storeUrl.searchParams.set('d', personalCode);
   document.getElementById('storeLink').href = storeUrl.toString();
 }
+async function makeShortUrl(longUrl) {
+  const cacheKey = 'pcard.shorturl.' + longUrl;
+  try { const cached = localStorage.getItem(cacheKey); if (cached) return cached; } catch {}
+  return new Promise((resolve, reject) => {
+    const callback = 'pcardShort_' + Date.now() + '_' + Math.random().toString(36).slice(2);
+    const script = document.createElement('script');
+    let finished = false;
+    const cleanup = () => { if (finished) return; finished = true; clearTimeout(timer); script.remove(); try { delete window[callback]; } catch {} };
+    const timer = setTimeout(() => { cleanup(); reject(new Error('short url timeout')); }, 12000);
+    window[callback] = data => {
+      cleanup();
+      if (data && data.shorturl) { try { localStorage.setItem(cacheKey, data.shorturl); } catch {} resolve(data.shorturl); }
+      else reject(new Error((data && data.errormessage) || 'short url failed'));
+    };
+    script.onerror = () => { cleanup(); reject(new Error('short url connection failed')); };
+    const endpoint = new URL('https://is.gd/create.php');
+    endpoint.searchParams.set('format', 'json');
+    endpoint.searchParams.set('callback', callback);
+    endpoint.searchParams.set('url', longUrl);
+    script.src = endpoint.toString();
+    document.head.appendChild(script);
+  });
+}
+function escapeVCard(value) {
+  return String(value || '').replace(/\\/g, '\\\\').replace(/\r?\n/g, '\\n').replace(/,/g, '\\,').replace(/;/g, '\\;');
+}
+document.getElementById('addContact').addEventListener('click', async () => {
+  const button = document.getElementById('addContact');
+  const name = (params.get('interviewer') || '').trim();
+  const phone = (params.get('phone') || '').trim();
+  if (!name || !phone) { alert('網址沒有帶入經銷商姓名或電話，無法建立聯絡人。'); return; }
+  button.disabled = true;
+  button.textContent = '準備中…';
+  const longUrl = document.getElementById('storeLink').href;
+  let shoppingUrl = longUrl;
+  let shortFailed = false;
+  try { shoppingUrl = await makeShortUrl(longUrl); } catch { shortFailed = true; }
+  const formattedName = '安麗' + name;
+  const vcard = [
+    'BEGIN:VCARD', 'VERSION:3.0',
+    'FN:' + escapeVCard(formattedName),
+    'N:' + escapeVCard(formattedName) + ';;;;',
+    'TEL;TYPE=CELL:' + escapeVCard(phone),
+    'URL;TYPE=WORK:' + escapeVCard(shoppingUrl),
+    'END:VCARD', ''
+  ].join('\r\n');
+  const blob = new Blob([vcard], {type:'text/vcard;charset=utf-8'});
+  const fileUrl = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = fileUrl;
+  link.download = '安麗' + name.replace(/[^\u4e00-\u9fa5A-Za-z0-9_-]/g, '_') + '.vcf';
+  document.body.appendChild(link); link.click(); link.remove();
+  setTimeout(() => URL.revokeObjectURL(fileUrl), 1500);
+  const shown = document.getElementById('shortUrlDisplay');
+  const shownLink = document.getElementById('shortUrlLink');
+  shownLink.href = shoppingUrl; shownLink.textContent = shoppingUrl; shown.hidden = false;
+  button.disabled = false; button.textContent = '加入電話簿';
+  alert((shortFailed ? '短網址暫時無法產生，聯絡人會使用完整購物網址。' : '') + '聯絡人檔已下載。請打開 .vcf 檔，選擇 Google 聯絡人並儲存，即可加入電話簿。');
+});
 const bottomBar = document.querySelector('.bottomBar');
 function fitBottomBar() { document.body.style.paddingBottom = (bottomBar.offsetHeight + 12) + 'px'; }
 fitBottomBar();
