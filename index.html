@@ -7,30 +7,29 @@
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#f3f6f3;color:#24332b;font-family:Arial,'Noto Sans TC',sans-serif}
-.stickyTop{position:sticky;top:0;z-index:100;background:#fff;padding:10px 14px 8px;border-bottom:1px solid #cbd8c8;box-shadow:0 2px 7px #0002}
-.dealer{font-size:18px;font-weight:bold;line-height:1.5;margin-bottom:7px;overflow-wrap:anywhere}
-.order-bar{display:block;text-align:center;background:#287944;color:#fff;text-decoration:none;padding:10px 14px;border-radius:8px;font-size:21px;font-weight:bold}
-.order-note{margin:7px 0 0;font-size:16px;line-height:1.45}
-.note{background:#fff6dc;padding:12px;border-radius:7px;font-size:18px;line-height:1.45}
+.dealerTop{background:#fff;padding:8px 12px 4px;border-bottom:1px solid #cbd8c8}
+.dealer{font-size:15px;font-weight:bold;line-height:1.5;margin-bottom:7px;overflow-wrap:anywhere}
+.bottomBar{position:fixed;left:0;right:0;bottom:0;z-index:100;background:#fff;padding:8px 12px calc(6px + env(safe-area-inset-bottom));border-top:1px solid #cbd8c8;box-shadow:0 -2px 7px #0002}
+.order-bar{display:block;text-align:center;background:#287944;color:#fff;text-decoration:none;padding:7px 12px;border-radius:8px;font-size:17px;font-weight:bold}
+.order-note{margin:5px 0 0;font-size:14px;line-height:1.45}
+.note{background:#fff6dc;padding:9px;border-radius:7px;font-size:16px;line-height:1.45}
 main{max-width:1050px;margin:auto;padding:12px 18px 24px}
-h1{margin:8px 0 12px;text-align:center;color:#287944;font-size:26px}
+h1{margin:8px 0 12px;text-align:center;color:#287944;font-size:22px}
 .productHumanCrop{max-width:none;width:calc(100% + 36px);aspect-ratio:1024/864;overflow:hidden;margin:4px -18px 8px;border:0;border-radius:0;background:transparent}
 .productHumanCrop img{display:block;width:100%;height:100%;object-fit:fill}
-.productListTitle{margin:8px 0 6px;padding:10px;text-align:center;background:#176326;color:#fff;border-radius:10px;font-size:27px}
+.productListTitle{margin:8px 0 6px;padding:10px;text-align:center;background:#176326;color:#fff;border-radius:10px;font-size:21px}
 .productTextList{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px 8px}
-.productTextList li{display:flex;gap:8px;align-items:flex-start;padding:8px 10px;border:1px solid #c9d6c8;border-radius:8px;background:#f8fbf5;font-size:21px;line-height:1.4}
+.productTextList li{display:flex;gap:8px;align-items:flex-start;padding:8px 10px;border:1px solid #c9d6c8;border-radius:8px;background:#f8fbf5;font-size:17px;line-height:1.35}
 .productTextList li strong{flex:none;color:#245f31}
-.foundationNote{margin:8px 0;padding:10px 12px;border:2px solid #78a756;border-radius:10px;background:#fff7d8;color:#173f22;font-size:22px;line-height:1.5;text-align:center}
-#portalProducts>.note{margin:6px 0 10px;padding:8px 10px;font-size:20px;line-height:1.45}
-@media(max-width:520px){.productListTitle{font-size:24px}.productTextList{grid-template-columns:1fr}.productTextList li{font-size:20px;padding:7px 9px}.foundationNote{font-size:20px;padding:9px 10px}#portalProducts>.note{font-size:19px;padding:7px 9px}}
+.foundationNote{margin:8px 0;padding:10px 12px;border:2px solid #78a756;border-radius:10px;background:#fff7d8;color:#173f22;font-size:18px;line-height:1.4;text-align:center}
+#portalProducts>.note{margin:6px 0 10px;padding:8px 10px;font-size:16px;line-height:1.4}
+@media(max-width:520px){.productListTitle{font-size:19px}.productTextList{grid-template-columns:1fr}.productTextList li{font-size:16px;padding:6px 8px}.foundationNote{font-size:16px;padding:7px 8px}#portalProducts>.note{font-size:15px;padding:6px 8px}}
 @media(max-width:520px){main{padding:10px 14px 20px}}
 </style>
 </head>
 <body>
-<header class="stickyTop">
+<header class="dealerTop">
   <div class="dealer">經銷商：<span id="dealerName">未提供</span>　電話：<span id="dealerPhone">未提供</span></div>
-  <a id="storeLink" class="order-bar" href="https://shop.amway.com.tw/" target="_blank" rel="noopener noreferrer">連結網址</a>
-  <p class="order-note">如果需要其他400多項產品，請點左上方三條線</p>
 </header>
 <main>
 <h1>紐崔萊營養保健食品介紹</h1>
@@ -39,6 +38,10 @@ h1{margin:8px 0 12px;text-align:center;color:#287944;font-size:26px}
 <div class="foundationNote"><strong>基礎營養必須先足夠：</strong>優質蛋白、DOUBLE X 綜合營養片、得力綜合營養片、BODYKEY 營養代餐</div>
 <p class="note">紐崔萊機能性保健品都需經十年以上研發和測試，且通過醫院的人體實驗和碩博士論文發表SCI認證，才會上市銷售，但台灣因醫生綁定法規，公開言論敬請留意功能性說法，以官網標示為主。</p>
 </main>
+<div class="bottomBar">
+  <a id="storeLink" class="order-bar" href="https://shop.amway.com.tw/" target="_blank" rel="noopener noreferrer">安麗官網分享網址</a>
+  <p class="order-note">如果需要其他400多項產品，請點左上方三條線</p>
+</div>
 <script>
 const params = new URLSearchParams(location.search);
 const dealerName = (params.get('interviewer') || '').trim();
@@ -51,6 +54,10 @@ if (personalCode) {
   storeUrl.searchParams.set('d', personalCode);
   document.getElementById('storeLink').href = storeUrl.toString();
 }
+const bottomBar = document.querySelector('.bottomBar');
+function fitBottomBar() { document.body.style.paddingBottom = (bottomBar.offsetHeight + 12) + 'px'; }
+fitBottomBar();
+window.addEventListener('resize', fitBottomBar);
 </script>
 </body>
 </html>
