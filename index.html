@@ -40,7 +40,7 @@ html:not(.lineInApp) .productTextList li{font-size:18px;line-height:1.45}
 html:not(.lineInApp) .foundationNote{font-size:20px;line-height:1.5}
 html:not(.lineInApp) .note{font-size:18px;line-height:1.5}
 html:not(.lineInApp) .order-bar{font-size:22px;padding:10px 12px}
-html:not(.lineInApp) .order-note{font-size:18px;line-height:1.45}
+html:not(.lineInApp) .order-note{font-size:clamp(12px,3.6vw,16px);line-height:1.35}
 </style>
 </head>
 <body>
@@ -58,8 +58,12 @@ html:not(.lineInApp) .order-note{font-size:18px;line-height:1.45}
 <p class="note">紐崔萊機能性保健品都需經十年以上研發和測試，且通過醫院的人體實驗和碩博士論文發表SCI認證，才會上市銷售，但台灣因醫生綁定法規，公開言論敬請留意功能性說法，以官網標示為主。</p>
 </main>
 <div class="bottomBar">
-  <a id="storeLink" class="order-bar" href="https://shop.amway.com.tw/" target="_blank" rel="noopener noreferrer">紐崔萊/安麗 訂貨官網</a>
-  <p class="order-note">如果需要其他400多項產品，請點左上方三條線</p>
+  <a id="storeLink" class="order-bar" href="https://shop.amway.com.tw/category/p1000?d=" target="_blank" rel="noopener noreferrer">紐崔萊/安麗 訂貨官網</a>
+  <div class="order-note">
+    <div>左上≡是總目錄、中上👤是送貨進度、右上🛒是結帳</div>
+    <div>首次使用先免費註冊，以後只要手機號碼認證即可宅配、商店取貨、刷卡或貨到付款。</div>
+    <div>☆找我辦會員另有優惠</div>
+  </div>
 </div>
 <script>
 const params = new URLSearchParams(location.search);
@@ -69,7 +73,7 @@ const personalCode = (params.get('shop') || params.get('d') || '').trim();
 document.getElementById('dealerName').textContent = dealerName || '未提供';
 document.getElementById('dealerPhone').textContent = dealerPhone || '未提供';
 if (personalCode) {
-  const storeUrl = new URL('https://shop.amway.com.tw/');
+  const storeUrl = new URL('https://shop.amway.com.tw/category/p1000?d=');
   storeUrl.searchParams.set('d', personalCode);
   document.getElementById('storeLink').href = storeUrl.toString();
 }
